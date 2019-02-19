@@ -1,0 +1,9 @@
+library(readr)
+processed_data <- read_csv("processed_data.csv")
+
+library(readxl)
+ranking <- read_excel("~/GitHub/Spring2019-Proj2-grp4/data/CollegeScorecard_Raw_Data/2019_USNews_Ranking.xlsx")
+
+ranking_data <- merge(x = processed_data, y = ranking, by.x = "INSTNM", by.y = "University", all.x = TRUE)
+
+write.csv(dat, file = "./output/ranking_data")
