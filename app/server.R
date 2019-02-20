@@ -1,4 +1,4 @@
-load("./output/processed_data_map.rds")
+#load("./output/processed_data_map.rds")
 function(input, output) {
   
   map_1 <- leaflet() %>%

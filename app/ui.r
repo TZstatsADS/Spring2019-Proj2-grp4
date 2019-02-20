@@ -21,7 +21,7 @@ header <- dashboardHeader(title="University Hacker",
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("WELCOME",tabName="welcome",icon=icon("info")),
+    menuItem("GET STARTED",tabName="welcome",icon=icon("lightbulb-o")),
     menuItem("STEP 1: Browse",tabName="browse",icon=icon("arrow-alt-circle-right")),
     selectInput("location","Location",
                 choices = c("All","AK","AL","AR","AS","AZ","CA","CO","CT","DC","DE"
@@ -57,6 +57,9 @@ body <- dashboardBody(
             "This is placeholder for Welcome"),
     tabItem(tabName = "browse",
             fluidRow(
+              valueBox(width = 4, value = "TBD", subtitle = "Top Ranking", icon = icon("trophy", "fa-0.5x"), color = "maroon"),
+              valueBox(width = 4, value = "TBD", subtitle = "Most Affordable", icon = icon("dollar-sign", "fa-0.5x"), color = "aqua"),
+              valueBox(width = 4, value = "TBD", subtitle = "Highest Admission", icon = icon("shield-check", "fa-0.5x"), color = "orange"),
               tabBox(width = 12, 
                      tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1")))
             ),
