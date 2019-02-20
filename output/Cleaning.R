@@ -18,3 +18,8 @@ dat = data %>%
   select(UNITID, INSTNM, ZIP, CONTROL, PREDDEG, AVGFACSAL, LATITUDE, LONGITUDE) 
 
 write.csv(dat, file = "./output/processed_data_map.csv")
+
+#iter 3
+data = read.csv("./output/processed_data_map.csv")
+
+saveRDS(data, file = "./output/processed_data_map.rds")
