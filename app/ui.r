@@ -54,7 +54,7 @@ sidebar <- dashboardSidebar(
 body <- dashboardBody(
   tabItems(
     tabItem(tabName = "welcome",
-            "This is placeholder for Welcome"),
+            fluidPage(img(src = 'for-shiny-app-2.png'))),
     tabItem(tabName = "browse",
             fluidRow(
               valueBox(width = 4, value = "TBD", subtitle = "Top Ranking", icon = icon("trophy", "fa-0.5x"), color = "maroon"),
