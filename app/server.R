@@ -8,6 +8,12 @@ function(input, output) {
             zoom = 4) 
   output$map_1 <- renderLeaflet(map_1)
   
+  # u.list <- reactive({if (input$add == 0) return() isolate({
+  #   list(input$add, unlist(u.list()))
+  # })})
+  # 
+  # output
+  
 }
 
 

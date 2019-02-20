@@ -62,15 +62,22 @@ body <- dashboardBody(
             ),
                      tabPanel("This is a placeholder for TABLE/buttons")
             ),
+           #           tabPanel(actionButton("add", "Add University")
+           #                    
+           #  ),
+           # 
+           #            tabPanel(verbartimTextOutput("list")
+           #   
+           # ),
     
     
     tabItem(tabName="compare", "Placeholder - Step 2: Compare Universities of Choice"),
     
-    tabItem(tabName="dig_in","Placeholder - Step 3: Dig into Details on THE University")
+    tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University")
     
   )
 )
 
 #Get the dashboard
 
-dashboardPage(header, sidebar, body)
+dashboardPage(skin = "green", header, sidebar, body)
