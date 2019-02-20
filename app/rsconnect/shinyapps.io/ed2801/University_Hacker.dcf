@@ -1,0 +1,13 @@
+name: University_Hacker
+title: University_Hacker
+username:
+account: ed2801
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 729228
+bundleId: 1887550
+url: https://ed2801.shinyapps.io/University_Hacker/
+when: 1550691334.55951
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: professor examlpe/server.R|professor examlpe/ui.r
