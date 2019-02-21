@@ -23,3 +23,13 @@ write.csv(dat, file = "./output/processed_data_map.csv")
 data = read.csv("./output/processed_data_map.csv")
 
 saveRDS(data, file = "./output/processed_data_map.rds")
+
+#iter 4
+
+data = read.csv("./output/ranking_data.csv")
+
+data %>%
+  select(UNITID, INSTNM, ADM_RATE, TUITIONFEE_IN, Ranking) %>%
+  write.csv(file = "./output/processed_data_value_box.csv")
+  
+  

@@ -2,8 +2,11 @@ library(plotly)
 library(ggthemes)
 library(shiny)
 library(reshape2)
+library(parcoords)
+
 #data
-data = read.csv("processed_data")
+setwd('~/Documents/GitHub/Spring2019-Proj2-grp4/output')
+data = read.csv("processed_data.csv")
 
 #data compare parcoord
 data_compare_parcoord<-data.frame(data$INSTNM,data$ADM_RATE,data$ACTCMMID,data$SAT_AVG,data$MN_EARN_WNE_P10)

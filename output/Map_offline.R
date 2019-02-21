@@ -14,3 +14,5 @@ map_1 <- leaflet() %>%
              lat = data$LATITUDE, color = as.factor(data$CONTROL)) %>%
   addLegend(labels = c("P", "NP", "FP"), colors = c("blue", "red", "green"))
 typeof(data$CONTROL)
+
+my_icon = icon("map-pin", class = "fas fa-map-pin")
