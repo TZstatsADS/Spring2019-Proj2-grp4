@@ -1,3 +1,4 @@
+devtools::install_github("timelyportfolio/parcoords")
 packages.used=c("shiny", "plotly", "shinydashboard", "leaflet","DT")
 
 # check packages that need to be installed.
@@ -15,6 +16,8 @@ library(leaflet)
 library(DT)
 library(shinydashboard)
 library(plotly)
+
+
 
 #data = read.csv("./data/processed_data_map.csv")
 #load("./data/processed_data_map.csv")
