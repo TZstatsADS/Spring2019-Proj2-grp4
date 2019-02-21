@@ -1,4 +1,4 @@
-devtools::install_github("timelyportfolio/parcoords")
+#devtools::install_github("timelyportfolio/parcoords")
 packages.used=c("shiny", "plotly", "shinydashboard", "leaflet","DT")
 
 # check packages that need to be installed.

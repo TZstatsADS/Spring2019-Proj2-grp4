@@ -58,16 +58,11 @@ body <- dashboardBody(
     tabItem(tabName = "browse",
             fluidRow(
               tabBox(width = 6, 
-                     tabPanel(title = "Top Rank", width = 6, solidHeader = T, tableOutput("rank")),
-                     tabPanel(title = "Most Affordable", width = 6, solidHeader = T, tableOutput("afford"))),
+                     tabPanel(title = "Top Rank", width = 6, solidHeader = T, tableOutput("rank"))),
               tabBox(width = 6, 
                      tabPanel(title = "Most Affordable", width = 6, solidHeader = T, tableOutput("afford"))),
-              valueBoxOutput("admission_box"),
-              valueBox(width = 4, value = "TBD", subtitle = "Most Affordable", icon = icon("dollar-sign", "fa-0.5x"), color = "aqua"),
-              valueBox(width = 4, value = "TBD", subtitle = "Highest Admission", icon = icon("shield-check", "fa-0.5x"), color = "orange"),
               tabBox(width = 12, 
-                     tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1")))
-            ),
+                     tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1"))),
                      tabPanel("This is a placeholder for TABLE/buttons")
             ),
     
@@ -76,6 +71,7 @@ body <- dashboardBody(
     tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University")
     
   )
+)
 )
 
 #Get the dashboard
