@@ -9,6 +9,7 @@ library(geosphere)
 library(formattable)
 library(dplyr)
 
+#data=read.csv("data_compare_3.csv",header = TRUE)
 
 shinyServer(function(input, output) {
 
