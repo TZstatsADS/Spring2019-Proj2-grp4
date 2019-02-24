@@ -6,7 +6,12 @@ data_v = read.csv("../output/processed_data_value_box.csv")
 function(input, output) {
     
   map_1 <- leaflet() %>%
-    addTiles() %>%
+    addTiles(
+      urlTemplate = "//{s}.tiles.mapbox.com/v3/jcheng.map-5ebohr46/{z}/{x}/{y}.png",
+      attribution = 'Maps by <a href="http://www.mapbox.com/"Mapbox</a>'
+    ) %>%
+    setView( lng = -93.85, lat = 37.45, zoom = 4) %>%
+    clearShapes() %>%
     addCircleMarkers(lng = data$LONGITUDE,
                lat = data$LATITUDE, popup = paste(data$INSTNM, "<br>", data$INSTURL), clusterOptions = markerClusterOptions()) #%>%
 #    addLegend(values = ~data$CONTROL, colors = c("green", "blue", "red"))
@@ -88,7 +93,7 @@ function(input, output) {
    
    if(input$color == "Other") {
      usedcolor = "yellow"
-     radius = lidata$Other*1000000
+     radius = lidata$Other*100000
      opacity = 0.8
    } else if(input$color == "Psychology") {
      usedcolor = "red"
@@ -137,13 +142,22 @@ function(input, output) {
  #output$afford <- renderTable(top_afford, colnames = F) 
  
  ## Info boxes
- top_rank = data_v %>%
+ 
+ # output$rank <- renderTable({
+ #   top_rank = select(filter4(), c("INSTNM", "Ranking"))
+ #   top_rank = arrange(top_rank$Ranking)
+ #   top_rank = filter(!is.na(top_rank$Ranking))
+ #   head(top_rank) 
+ #   }) 
+ 
+ top_afford = data_v %>%
    select(INSTNM, Ranking) %>%
    filter(!is.na(Ranking)) %>%
    arrange(Ranking) %>%
    head(3)
  
- output$rank <- renderTable(top_rank, colnames = F) 
+ output$afford <- renderTable(top_afford, colnames = F)  
+ 
  
  top_afford = data_v %>%
    select(INSTNM, TUITIONFEE_IN) %>%
@@ -152,7 +166,17 @@ function(input, output) {
    head(3)
  
  output$afford <- renderTable(top_afford, colnames = F) 
+
  
+ output$uni_table = DT::renderDataTable({
+   table = subset(filter4(), select = c("Ranking", "INSTNM", "INSTURL", "CONTROL", "OPENADMP"))
+   
+   colnames(table) = c("Ranking", "INSTNM", "INSTURL", "CONTROL", "OPENADMP")
+   
+   datatable(table, rownames = F, selection = "single", options = list(order = list(list(0, "asc"), list(1, "asc")))) %>%
+     formatPercentage(c("Ranking"), digits = 0)# %>%
+   #  formatCurrency(c())
+ }) 
 
 }
 

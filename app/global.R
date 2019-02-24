@@ -1,5 +1,5 @@
 #devtools::install_github("timelyportfolio/parcoords")
-packages.used=c("shiny", "plotly", "shinydashboard", "leaflet","DT")
+packages.used=c("shiny", "plotly", "shinydashboard", "leaflet","DT", "shinyWidgets")
 
 # check packages that need to be installed.
 packages.needed=setdiff(packages.used, 
@@ -16,6 +16,7 @@ library(leaflet)
 library(DT)
 library(shinydashboard)
 library(plotly)
+library(shinyWidgets)
 
 
 

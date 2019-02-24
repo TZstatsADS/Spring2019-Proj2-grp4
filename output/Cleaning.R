@@ -64,17 +64,16 @@ dat_major = dat %>%
   replace(.=="NULL", 0) %>%
   apply(MARGIN = c(1, 2), FUN = to_binary) 
   
-colnames(dat_major) <- c("Agriculture","Natural Resources and Conservation","Architecture",
-                         "Cultural and Gender Studies","Communication and Journalism","Communications Technologies and Support Services",
-                         "Computer and Information Sciences","Personal and Culinary Services","Education","Engineering","Engineering Technologies",
-                         "Foreign Languages and Linguistics","Family and Consumer Sciences","Legal Professions and Studies","English Language and Literature",
-                         "Liberal Arts and Sciences - General Studies and Humanities","Library Science","Biological and Biomedical Sciences","Mathematics and Statistics",
-                         "Military Technologies and Applied Sciences","Interdisciplinary Studies","Recreation Studies","Philosophy and Religious Studies",
-                         "Theology and Religious Vocations","Physical Sciences","Science Technologies","Psychology","Homeland Security, Law Enforcement, Firefighting and Related Protective Services",
-                         "Public Administration","Social Sciences","Construction Trades","Mechanic and Repair Technologies","Precision Production",
-                         "Transportation and Materials Moving","Visual and Performing Arts","Health Professions",
-                         "Business Management and Marketing","History", "Other")
-
+colnames(dat_major) <- c("Agriculture","Natural","Architecture",
+                         "Cultural_Gender","Journalism","Communications_Technologies",
+                         "Computer","Personal_Culinary","Education","Engineering","Engineering_Technologies",
+                         "Foreign_Languages","Family_Consumer","Legal","English",
+                         "Liberal_Arts_Sciences","Library","Biological_Biomedical","Math_Stat",
+                         "Military","Interdisciplinary","Recreation","Philosophy_Religious",
+                         "Theology","Physical","Science_Tech","Psychology","Homeland_Security",
+                         "Public","Social","Construction","Mechanic","Precision",
+                         "Transportation","Visual_Arts","Health",
+                         "Business", "History", "Other")
 dat_major = as.data.frame(dat_major)
 
 dat = dat %>%
@@ -120,16 +119,16 @@ dat_major = dat %>%
   replace(.=="NULL", 0) %>%
   apply(MARGIN = c(1, 2), FUN = to_float) 
 
-colnames(dat_major) <- c("Agriculture","Natural Resources and Conservation","Architecture",
-                         "Cultural and Gender Studies","Communication and Journalism","Communications Technologies and Support Services",
-                         "Computer and Information Sciences","Personal and Culinary Services","Education","Engineering","Engineering Technologies",
-                         "Foreign Languages and Linguistics","Family and Consumer Sciences","Legal Professions and Studies","English Language and Literature",
-                         "Liberal Arts and Sciences - General Studies and Humanities","Library Science","Biological and Biomedical Sciences","Mathematics and Statistics",
-                         "Military Technologies and Applied Sciences","Interdisciplinary Studies","Recreation Studies","Philosophy and Religious Studies",
-                         "Theology and Religious Vocations","Physical Sciences","Science Technologies","Psychology","Homeland Security, Law Enforcement, Firefighting and Related Protective Services",
-                         "Public Administration","Social Sciences","Construction Trades","Mechanic and Repair Technologies","Precision Production",
-                         "Transportation and Materials Moving","Visual and Performing Arts","Health Professions",
-                         "Business Management and Marketing","History", "Other")
+colnames(dat_major) <- c("Agriculture","Natural","Architecture",
+                         "Cultural_Gender","Journalism","Communications_Technologies",
+                         "Computer","Personal_Culinary","Education","Engineering","Engineering_Technologies",
+                         "Foreign_Languages","Family_Consumer","Legal","English",
+                         "Liberal_Arts_Sciences","Library","Biological_Biomedical","Math_Stat",
+                         "Military","Interdisciplinary","Recreation","Philosophy_Religious",
+                         "Theology","Physical","Science_Tech","Psychology","Homeland_Security",
+                         "Public","Social","Construction","Mechanic","Precision",
+                         "Transportation","Visual_Arts","Health",
+                         "Business", "History", "Other")
 
 dat_major = as.data.frame(dat_major)
 
