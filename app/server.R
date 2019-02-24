@@ -118,16 +118,28 @@ function(input, output) {
    currency.sym = "$"
    avg_in = filter(filter4(), TUITIONFEE_IN!="NULL" & !is.na(TUITIONFEE_IN))
    avg_in = round(mean(as.numeric(as.character(avg_in$TUITIONFEE_IN))), digits = 0)
-   avg_in = comma(avg_in)
-   valueBox( value = paste(currency.sym, avg_in), subtitle = "Avg Tuition In-State", icon = icon("dollar-sign"), color = "orange") 
- })
+   avg_in_comma = comma(avg_in)
+  
+   if (!is.nan(avg_in)) {
+     valueBox(value = paste(currency.sym, avg_in_comma), subtitle = "Avg Tuition In-State", icon = icon("dollar-sign"), color = "orange") 
+   } else {
+     valueBox(value = "No Offers", subtitle = "Avg Tuition In-State", icon = icon("dollar-sign"), color = "orange")
+   }
+   
+   })
  
  output$avgBox_out <- renderValueBox({
    currency.sym = "$"
    avg_out = filter(filter4(), TUITIONFEE_OUT!="NULL" & !is.na(TUITIONFEE_OUT))
    avg_out = round(mean(as.numeric(as.character(avg_out$TUITIONFEE_OUT))), digits = 0)
-   avg_out = comma(avg_out)
-   valueBox(value = paste(currency.sym, avg_out), subtitle = "Avg Tuition OOF-State", icon = icon("dollar-sign")) 
+   avg_out_comma = comma(avg_out)
+   
+   if (!is.nan(avg_out)) {
+     valueBox(value = paste(currency.sym, avg_out_comma), subtitle = "Avg Tuition OOF-State", icon = icon("dollar-sign"))
+   } else {
+     valueBox(value = "No Offers", subtitle = "Avg Tuition OOF-State", icon = icon("dollar-sign"))
+   }
+ 
  })
 
  output$avgBox_act <- renderValueBox({

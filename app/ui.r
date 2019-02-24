@@ -67,7 +67,7 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("GET STARTED",tabName="welcome",icon=icon("lightbulb-o")),
     menuItem("STEP 1: Browse",tabName="browse",icon=icon("arrow-alt-circle-right")),
-    menuItem("STEP 1: Filter",tabName="filter",icon=icon("arrow-alt-circle-right"),
+    menuItem("       Use Filter",tabName="filter",icon=icon("filter"),
              selectInput("major", "Major",
                          choices = majors),
              selectInput("location","Location",
