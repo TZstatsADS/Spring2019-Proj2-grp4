@@ -57,10 +57,17 @@ majors = c("All" = "All",
            "Business Management and Marketing" = "Business",
            "History" = "History", 
            "Other" = "Other")
+
+control_var = c("All" = "All", 
+                "Public" = "Public",
+                "Private nonprofit" = "PNP",
+                "Private for-profit" = "PFP")
+
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("GET STARTED",tabName="welcome",icon=icon("lightbulb-o")),
-    menuItem("STEP 0: FILTER",tabName="filter",icon=icon("arrow-alt-circle-right"),
+    menuItem("STEP 1: Browse",tabName="browse",icon=icon("arrow-alt-circle-right")),
+    menuItem("STEP 1: Filter",tabName="filter",icon=icon("arrow-alt-circle-right"),
              selectInput("major", "Major",
                          choices = majors),
              selectInput("location","Location",
@@ -75,9 +82,8 @@ sidebar <- dashboardSidebar(
                                      "West Virginia", "Wisconsin", "Wyoming", "American Samoa", "Federated States of Micronesia", 
                                      "Guam", "Northern Mariana Islands", "Palau", "Puerto Rico", "Virgin Islands")),
              selectInput("highest_degree", "Degree", choices = c("All","Graduate","Bachelor","Associate","Certificate","Non-degree-granting")),
-             selectInput("control", "Type", choices = c("All", "Public","Private nonprofit","Private for-profit")),
+             selectInput("control", "Type", choices = control_var),
              checkboxInput("open_adm", "Open Admissions Policy")),
-    menuItem("STEP 1: Browse",tabName="browse",icon=icon("arrow-alt-circle-right")),
     menuItem("STEP 2: Compare",tabName="compare",icon=icon("arrow-alt-circle-right")),
     menuItem("STEP 3: Dig In",tabName="dig_in",icon=icon("arrow-alt-circle-right"))
   )
@@ -87,16 +93,21 @@ livars = c("History" = "History", "Other" = "Other", "Psychology" = "Psychology"
 #Body
 
 body <- dashboardBody(
+  fluidPage(
   tabItems(
     tabItem(tabName = "welcome",
-            fluidRow(img(src = 'for-shiny-app-2.png'))),
+            fluidRow(img(src = 'for-shiny-app-3.png'),
+                     img(src = 'shiny_ad.png'))),
+    tabItem(tabName = "filter"
+      
+    ),
     tabItem(tabName = "browse",
-            
             fluidRow(
-              tabBox(width = 6, 
-                     tabPanel(title = "Top Rank", width = 6, solidHeader = T, tableOutput("rank"))),
-              tabBox(width = 6, 
-                     tabPanel(title = "Most Affordable", width = 6, solidHeader = T, tableOutput("afford"))),
+              valueBoxOutput(width = 3, "avgBox_in"),
+              valueBoxOutput(width = 3, "avgBox_out"),
+              valueBoxOutput(width = 2, "avgBox_act"),
+              valueBoxOutput(width = 2, "avgBox_sat"),
+              valueBoxOutput(width = 2, "avgBox_adm"),
               tabBox(width = 12, 
                      tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1")),
                      tabPanel(title="Map_2", width = 12, solidHeader = T, 
@@ -116,7 +127,7 @@ body <- dashboardBody(
     tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University")
   )
 )
-
+)
 
 #Get the dashboard
 

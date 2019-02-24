@@ -111,71 +111,70 @@ function(input, output) {
  
  output$map_2 <- renderLeaflet(map_2)
 })  
+ 
+#### Value Boxes
+ 
+ output$avgBox_in <- renderValueBox({
+   currency.sym = "$"
+   avg_in = filter(filter4(), TUITIONFEE_IN!="NULL" & !is.na(TUITIONFEE_IN))
+   avg_in = round(mean(as.numeric(as.character(avg_in$TUITIONFEE_IN))), digits = 0)
+   avg_in = comma(avg_in)
+   valueBox( value = paste(currency.sym, avg_in), subtitle = "Avg Tuition In-State", icon = icon("dollar-sign"), color = "orange") 
+ })
+ 
+ output$avgBox_out <- renderValueBox({
+   currency.sym = "$"
+   avg_out = filter(filter4(), TUITIONFEE_OUT!="NULL" & !is.na(TUITIONFEE_OUT))
+   avg_out = round(mean(as.numeric(as.character(avg_out$TUITIONFEE_OUT))), digits = 0)
+   avg_out = comma(avg_out)
+   valueBox(value = paste(currency.sym, avg_out), subtitle = "Avg Tuition OOF-State", icon = icon("dollar-sign")) 
+ })
 
-
-
-## Info boxes
-#  top_rank = data_v %>%
-#    select(INSTNM, Ranking) %>%
-#    filter(!is.na(Ranking)) %>%
- #   arrange(Ranking) %>%
- #   head(3)
+ output$avgBox_act <- renderValueBox({
+   act = filter(filter4(), ACTCMMID !="NULL" & !is.na(ACTCMMID))
+   act = round(mean(as.numeric(as.character(act$ACTCMMID))), digits = 0)
+   if (!is.nan(act)) {
+     valueBox(value = act, subtitle = "Avg ACT", icon = icon("star"), color = "olive")
+   } else {
+     valueBox(value = "Any", subtitle = "Avg ACT", icon = icon("star"), color = "olive")
+   }
+   
+ }) 
  
+ output$avgBox_sat <- renderValueBox({
+   sat = filter(filter4(), SAT_AVG !="NULL" & !is.na(SAT_AVG))
+   sat = round(mean(as.numeric(as.character(sat$SAT_AVG))), digits = 0)
+   
+   if (!is.nan(sat)) {
+     valueBox(value = sat, subtitle = "Avg SAT", icon = icon("star"), color = "olive")
+   } else {
+     valueBox(value = "Any", subtitle = "Avg SAT", icon = icon("star"), color = "olive")
+   }
+ })
  
-#library(DT)
-#  output$rank <- renderDataTable({
-    
-#    table_1 = subset(filter4(), select(c("INSTNM", "Ranking")))
-#    colnames(table_1) = c("University", "Rank")
-#    table_1 = head(table_1, 5)
-    
-   #datatable(table_1, rownames = F, selection = "single", option = list(order = list(0, "asc"), list(1, "asc")))
-    
-#  }) 
+ output$avgBox_adm <- renderValueBox({
+   currency.perc = "%"
+   avg_adm = filter(filter4(), ADM_RATE!="NULL" & !is.na(ADM_RATE))
+   avg_adm = round(mean(as.numeric(as.character(avg_adm$ADM_RATE))), digits = 2)
+   if (!is.nan(avg_adm)) {
+     valueBox(value = avg_adm, subtitle = "Avg Admission", icon = icon("sign-in-alt"), color = "maroon")
+   } else {
+     valueBox(value = "Any", subtitle = "Avg Admission", icon = icon("sign-in-alt"), color = "maroon")
+   }
+}) 
  
- #top_afford = data_v %>%
-#   select(INSTNM, TUITIONFEE_IN) %>%
-#   filter(!is.na(TUITIONFEE_IN)) %>%
- #  arrange(TUITIONFEE_IN) %>%
- #  head(3)
-
- #output$afford <- renderTable(top_afford, colnames = F) 
- 
- ## Info boxes
- 
- # output$rank <- renderTable({
- #   top_rank = select(filter4(), c("INSTNM", "Ranking"))
- #   top_rank = arrange(top_rank$Ranking)
- #   top_rank = filter(!is.na(top_rank$Ranking))
- #   head(top_rank) 
- #   }) 
- 
- top_afford = data_v %>%
-   select(INSTNM, Ranking) %>%
-   filter(!is.na(Ranking)) %>%
-   arrange(Ranking) %>%
-   head(3)
- 
- output$afford <- renderTable(top_afford, colnames = F)  
- 
- 
- top_afford = data_v %>%
-   select(INSTNM, TUITIONFEE_IN) %>%
-   filter(!is.na(TUITIONFEE_IN)) %>%
-   arrange(TUITIONFEE_IN) %>%
-   head(3)
- 
- output$afford <- renderTable(top_afford, colnames = F) 
-
+ ##Table
  
  output$uni_table = DT::renderDataTable({
-   table = subset(filter4(), select = c("Ranking", "INSTNM", "INSTURL", "CONTROL", "OPENADMP"))
+   table = subset(filter4(), select = c("Ranking", "INSTNM", "ADM_RATE", "CONTROL", "INSTURL", "ACTCMMID", "SAT_AVG", "OPENADMP", "TUITIONFEE_IN", "TUITIONFEE_OUT"))
    
-   colnames(table) = c("Ranking", "INSTNM", "INSTURL", "CONTROL", "OPENADMP")
+   colnames(table) = c("Rank", "Name", "Admission Rate", "Type", "URL", "Average ACT","Average SAT", "Open Admission Policy", "Tuition (In-State)", "Tuition (Out-of-State)")
    
    datatable(table, rownames = F, selection = "single", options = list(order = list(list(0, "asc"), list(1, "asc")))) %>%
-     formatPercentage(c("Ranking"), digits = 0)# %>%
-   #  formatCurrency(c())
+     formatPercentage(c("Admission Rate"), digits = 0) %>%
+     formatCurrency(c("Tuition (In-State)"), digits = 0) %>%
+     formatCurrency(c("Tuition (Out-of-State)"), digits = 0)
+     
  }) 
 
 }

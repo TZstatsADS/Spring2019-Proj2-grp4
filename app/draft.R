@@ -97,3 +97,78 @@ choices = c("All",
             "Public Administration and Social Service Professions","Social Sciences","Construction Trades","Mechanic and Repair Technologies/Technicians","Precision Production",
             "Transportation and Materials Moving","Visual and Performing Arts","Health Professions and Related Programs",
             "Business, Management, Marketing, and Related Support Services","History"))
+
+
+
+
+
+## Info boxes
+#  top_rank = data_v %>%
+#    select(INSTNM, Ranking) %>%
+#    filter(!is.na(Ranking)) %>%
+#   arrange(Ranking) %>%
+#   head(3)
+
+
+#library(DT)
+#  output$rank <- renderDataTable({
+
+#    table_1 = subset(filter4(), select(c("INSTNM", "Ranking")))
+#    colnames(table_1) = c("University", "Rank")
+#    table_1 = head(table_1, 5)
+
+#datatable(table_1, rownames = F, selection = "single", option = list(order = list(0, "asc"), list(1, "asc")))
+
+#  }) 
+
+#top_afford = data_v %>%
+#   select(INSTNM, TUITIONFEE_IN) %>%
+#   filter(!is.na(TUITIONFEE_IN)) %>%
+#  arrange(TUITIONFEE_IN) %>%
+#  head(3)
+
+#output$afford <- renderTable(top_afford, colnames = F) 
+
+## Info boxes
+
+# output$rank <- renderTable({
+#   top_rank = select(filter4(), c("INSTNM", "Ranking"))
+#   top_rank = arrange(top_rank$Ranking)
+#   top_rank = filter(!is.na(top_rank$Ranking))
+#   head(top_rank) 
+#   }) 
+
+top_afford = data_v %>%
+  select(INSTNM, Ranking) %>%
+  filter(!is.na(Ranking)) %>%
+  arrange(Ranking) %>%
+  head(3)
+
+output$afford <- renderTable(top_afford, colnames = F)  
+
+
+top_afford = data_v %>%
+  select(INSTNM, TUITIONFEE_IN) %>%
+  filter(!is.na(TUITIONFEE_IN)) %>%
+  arrange(TUITIONFEE_IN) %>%
+  head(3)
+
+output$afford <- renderTable(top_afford, colnames = F) 
+
+tabBox(width = 6, 
+       tabPanel(title = "Top Rank", width = 6, solidHeader = T, tableOutput("rank")))
+
+tabBox(width = 6, 
+       tabPanel(title = "Most Affordable", width = 6, solidHeader = T, tableOutput("afford"))),
+
+
+test = data %>%
+  select(ADM_RATE, INSTNM, SAT_AVG, ACTCMMID, OPENADMP) %>%
+  filter(ADM_RATE !="NULL" & !is.na(ADM_RATE)) #%>%
+ # summarise(round(mean(as.numeric(ACTCMMID)), digits = 0))
+summary(test)
+test$ADM_RATE = as.numeric(as.character(test$ADM_RATE))
+hist(test$ADM_RATE, by =)
+mean(test$ADM_RATE) #%>%
+# summarise(round(mean(as.numeric(ACTCMMID)), digits = 0))
+
