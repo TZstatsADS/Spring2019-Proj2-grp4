@@ -102,7 +102,7 @@ function(input, output) {
       addTiles() %>%
       addCircleMarkers(lng = filter4()$LONGITUDE,
                        lat = filter4()$LATITUDE, popup = content, radius = 4, color = ~pal(as.factor(filter4()$CONTROL)), clusterOptions = markerClusterOptions()) %>%
-      addLegend(position = "bottomright", pal = pal, values = c("Public", "PNP", "PFP"), title = "University Type",
+      addLegend(position = "topright", pal = pal, values = c("Public", "PNP", "PFP"), title = "University Type",
                 labFormat = labelFormat(transform = function(values)  {
   values = replace(values, values=="PNP", "Private Non-Profit")
   values = replace(values, values=="PFP", "Private For Profit")
