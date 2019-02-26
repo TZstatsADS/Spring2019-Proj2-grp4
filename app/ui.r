@@ -116,7 +116,35 @@ body <- dashboardBody(
                               dataTableOutput("uni_table"),
                               tags$style((type = "text/css")))))),
     
-    tabItem(tabName="compare", "Placeholder - Step 2: Compare Universities of Choice"),
+    tabItem(tabName="compare", "Placeholder - Step 2: Compare Universities of Choice",
+            fluidRow(
+              tabBox(width = 12,
+                     tabPanel(title = h3("Select the universities that interest you :)"), solidHeader = T,
+                              fluidRow(
+                                column(12,selectInput('university', '', data_c$College, multiple=TRUE))))),
+              box(width = 12,collapsible = T,
+                  title = strong("Basic Information"), solidHeader = F,
+                  fluidRow(
+                    column(12, DT::dataTableOutput("universities.table")))),
+              
+              box(width = 12,title = strong("Visualization"), solidHeader = F, collapsible = T,collapsed = TRUE,
+                  fluidRow(
+                    column(12, h4("1.Parcoords Comparison")),
+                    column(12, parcoordsOutput('par',width = '1200px',height='500px'))),
+                  hr(),
+                  fluidRow( 
+                    column(12, h4("2.Tuition & Earnings Comparison (Unit: dollar)")),
+                    hr(),
+                    plotOutput("tuitionPlot")),
+                  fluidRow( 
+                    column(12, h4("3.Rates Comparison")),
+                    hr(),
+                    plotOutput("proportionPlot"),
+                    p(em("Note: Value of 0 represents information unavailable")))
+              ))
+            
+            
+            ),
     tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University")
   )
 )

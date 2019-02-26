@@ -2,6 +2,8 @@
 data_2 = read.csv("../output/processed_data_map_2.csv")
 data = read.csv("../output/processed_data_map_1.csv")
 data_v = read.csv("../output/processed_data_value_box.csv")
+data_c=read.csv("../output/data_compare_3.csv",header = TRUE)
+data_c$Unemployment.Rate <- data_c$Unemployment.Rate/100
 
 function(input, output) {
   
@@ -188,6 +190,93 @@ function(input, output) {
      
  }) 
 
+ 
+ 
+ # basic information table
+ output$universities.table = DT::renderDataTable({
+   s=input$university
+   if(length(s)){
+     data_list<- data_c %>% dplyr::select(College,Rank,City,State,Region,
+                                          City.size,Control,Highest.Degree) %>% 
+       filter (College %in% input$university)
+     colnames(data_list)[c(6,8)]=c("City Size","Highest Degree")
+     data_list$Rank<-as.numeric(as.character(data_list$Rank))
+     data_list
+   }   
+ },
+ options=list(dom='tir',language=list(info='Note: Empty rank means rank over 230')))
+ 
+ 
+ # Tuition & earnings compare
+ output$tuitionPlot <- renderPlot({
+   data_hist <- data_c %>% dplyr::select(1, Tuition.Fee.in.state,Tuition.Fee.out.state,
+                                         Mean.Earnings.Female.Students,Mean.Earnings.Male.Students) %>% 
+     filter (College %in% input$university)
+   colnames(data_hist)[2:5]<-c("Tuition Fee in state","Tuition Fee out state",
+                               "Mean Earnings Female Students","Mean Earnings Male Students")
+   data_melt <- reshape2::melt(data_hist, id = "College")
+   data_melt$value=as.numeric(data_melt$value)
+   data_melt$value[is.na(data_melt$value)] <- 0
+   data_melt$value[is.null(data_melt$value)] <- 0
+   ggplot(data=data_melt, aes(x=variable,y=value,fill=College))+
+     geom_bar(stat="identity", width=.5,position=position_dodge((.7)))+
+     guides(fill=guide_legend(title=NULL))+
+     labs(y="unit:dollar")+
+     geom_text(aes(label = round(value,2)),position=position_dodge(width=0.7), vjust=-0.25)+
+     theme_wsj()+
+     theme(axis.title = element_blank(),legend.position = 'top')
+   
+ })
+ 
+ # Proportion rate compare
+ output$proportionPlot <- renderPlot({
+   data_proportion <- data_c %>% dplyr::select(1,Female.Proportion,Married,
+                                               Unemployment.Rate,Share.of.Students.Earning.over..25.000.year) %>% 
+     filter (College %in% input$university)
+   colnames(data_proportion)[2:5]<-c("Female Proportion","Married",
+                                     "Unemployment Rate","Share of Students Earning over 25,000 per year")
+   data_melt_proportion <- reshape2::melt(data_proportion, id = "College")
+   data_melt_proportion$value=as.numeric(data_melt_proportion$value)
+   data_melt_proportion$value[is.na(data_melt_proportion$value)] <- 0
+   data_melt_proportion$value[is.null(data_melt_proportion$value)] <- 0
+   ggplot(data=data_melt_proportion, aes(x=variable,y=value,fill=College))+
+     geom_bar(stat="identity", width=.5,position=position_dodge((.7)))+
+     guides(fill=guide_legend(title=NULL))+
+     geom_text(aes(label = round(value,2)), position=position_dodge(width=0.7), vjust=-0.25)+
+     theme(axis.title = element_blank(),legend.position = 'top')+ 
+     scale_y_continuous(breaks=seq(0,1,0.1))+
+     theme_wsj()
+ })
+ 
+ 
+ 
+ # parcoords graph
+ output$par <- renderParcoords({
+   data_Parcoords<-data_c %>% dplyr::select(1,Admission.Rate,ACT.score,
+                                            SAT.score,Mean.Earnings.Students) %>% 
+     filter(College %in% input$university)
+   colnames(data_Parcoords)[2:5]=c("Admission Rate","ACT score",
+                                   "SAT score","Mean Earnings of Students")
+   # change data into numeric
+   data_Parcoords[,2]<-as.numeric(as.character(data_Parcoords[,2]))
+   data_Parcoords[,2][is.na(data_Parcoords[,2])]<-0
+   data_Parcoords[,3]<-as.numeric(as.character(data_Parcoords[,3]))
+   data_Parcoords[,3][is.na(data_Parcoords[,3])]<-0
+   data_Parcoords[,4]<-as.numeric(as.character(data_Parcoords[,4]))
+   data_Parcoords[,4][is.na(data_Parcoords[,4])]<-0
+   data_Parcoords[,5]<-as.numeric(as.character(data_Parcoords[,5]))
+   data_Parcoords[,5][is.na(data_Parcoords[,5])]<-0
+   parcoords(data_Parcoords, rownames = F
+             , brushMode = "1d-axes"
+             , reorderable = T
+             , queue = F
+             , color = list(
+               colorBy = "College"
+               , colorScale = htmlwidgets::JS("d3.scale.category10()"))
+   )
+ }) 
+ 
+ 
 }
 
 
