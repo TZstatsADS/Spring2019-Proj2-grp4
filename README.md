@@ -16,11 +16,11 @@ The **learning goals** for this project is:
 - shiny app/shiny server
 
 *The above general statement about project 2 can be removed once you are finished with your project. It is optional.
-
+All
 ## Project Title: University Hacker - Find Your University in 3 Easy Steps
 Term: Spring 2019
 
-Team # 4
+### Team # 4
 - Elena Dubova
 - Ying Jin
 - Xuewei Li
@@ -38,7 +38,7 @@ Thus, user navigates easily from **"Few Details - Many Universities"** to **"Man
 
 ### Contribution statement 
 
-([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
+Team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
