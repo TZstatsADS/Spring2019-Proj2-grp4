@@ -99,9 +99,7 @@ body <- dashboardBody(
     tabItem(tabName = "welcome",
             fluidRow(img(src = 'for-shiny-app-3.png'),
                      img(src = 'shiny_ad.png'))),
-    tabItem(tabName = "filter"
-      
-    ),
+    tabItem(tabName = "filter"),
     tabItem(tabName = "browse",
             fluidRow(
               valueBoxOutput(width = 3, "avgBox_in"),
@@ -145,10 +143,61 @@ body <- dashboardBody(
             
             
             ),
-    tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University")
-  )
-)
-)
+    tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University",
+            fluidRow(
+              tabBox(width = 12,
+                     tabPanel(title = h3("Choose one university to find more :)"), solidHeader = T,
+                              fluidRow(
+                                column(4,
+                                       selectizeInput('university1','',
+                                                      choices = c('',basic$INSTNM)))
+                              )),
+                     
+                     fluidRow(
+                       
+                       column(width = 8,offset = 4, h3(uiOutput("url"))),
+                       column(width = 8,offset = 4,
+                              h4(tableOutput("table")))
+                     )),
+              
+              box(width = 12,title = strong("Academics"), solidHeader = F, collapsible = T,collapsed = TRUE,
+                  fluidRow(
+                    plotOutput("academics"))
+              ),
+              
+              box(width = 12,title = strong("Admission Rate"), solidHeader = F, collapsible = T,collapsed = TRUE,
+                  fluidRow(
+                    plotOutput("adm_rate"))
+              ),
+              box(width = 12,title = strong("ACT Score"), solidHeader = F, collapsible = T,collapsed = TRUE,
+                  
+                  tabBox(width = 12,
+                         tabPanel("Cumulative", plotOutput("act_cul")),
+                         tabPanel("English", plotOutput("act_en")),
+                         tabPanel("Math", plotOutput("act_math"))
+                  )
+              ),
+              box(width = 12,title = strong("SAT Score"), solidHeader = F, collapsible = T,collapsed = TRUE,
+                  
+                  tabBox(width = 12,
+                         tabPanel('SAT equivalent score',width = 12, plotOutput('sat_eq')),
+                         tabPanel("Critical Reading", widh = 12, plotOutput("sat_cr")),
+                         tabPanel("Math",width = 12, plotOutput("sat_math"))
+                  )
+              ),
+              box(width = 12,title = strong("Tuition & Fee"), solidHeader = F, collapsible = T,collapsed = TRUE,
+                  
+                  tabBox(width = 12,
+                         tabPanel('In-state',plotOutput('in_fee')),
+                         tabPanel("Out-of-state", plotOutput("out_fee"))
+                  ))
+            
+            
+            
+            )
+  ))))
+
+
 
 #Get the dashboard
 
