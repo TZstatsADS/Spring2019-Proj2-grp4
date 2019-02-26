@@ -2,7 +2,7 @@ setwd('~/Documents/GitHub/Spring2019-Proj2-grp4/app')
 data_2 = read.csv("../output/processed_data_map_2.csv")
 data = read.csv("../output/processed_data_map_1.csv")
 data_v = read.csv("../output/processed_data_value_box.csv")
-data_c=read.csv("../output/data_compare_3.csv",header = TRUE)
+data_c = read.csv("../output/data_compare_3.csv",header = TRUE)
 data_c$Unemployment.Rate <- data_c$Unemployment.Rate/100
 basic = read.csv('../output/basic.csv', stringsAsFactors=FALSE)
 academics = read.csv('../output/academics.csv', stringsAsFactors=FALSE)
