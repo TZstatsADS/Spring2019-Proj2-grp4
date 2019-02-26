@@ -6,10 +6,6 @@ header <- dashboardHeader(title="University Hacker",
                             type = "messages",
                             messageItem(
                               from = "University Hacker Team",
-                              message = "Find YOUR university here!"
-                            ),
-                            messageItem(
-                              from = "University Hacker Team",
                               message = "We use College Scorecard Data",
                               href = "https://collegescorecard.ed.gov/data/documentation/"
                             )
