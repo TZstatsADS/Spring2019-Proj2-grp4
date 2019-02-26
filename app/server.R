@@ -4,16 +4,27 @@ data = read.csv("../output/processed_data_map_1.csv")
 data_v = read.csv("../output/processed_data_value_box.csv")
 
 function(input, output) {
-    
+  #pal = colorFactor(palette = c("red", "blue", "green"), 
+  #                  levels = c("Public", "PNP", "PFP"))  
   map_1 <- leaflet() %>%
     addTiles(
       urlTemplate = "//{s}.tiles.mapbox.com/v3/jcheng.map-5ebohr46/{z}/{x}/{y}.png",
       attribution = 'Maps by <a href="http://www.mapbox.com/"Mapbox</a>'
     ) %>%
-    setView( lng = -93.85, lat = 37.45, zoom = 4) %>%
-    clearShapes() %>%
+    #setView( lng = -93.85, lat = 37.45, zoom = 4) %>%
+    #fitBounds(lng1 = -124.7844079, lng2 = -669513812,
+    #          lat1 = 49.3457868, lat2 = 24.7433195) %>%
+    #setMaxBounds(lng1 = -124.7844079, lng2 = -669513812,
+    #          lat1 = 49.3457868, lat2 = 24.7433195) %>%
+    
+    #clearShapes() %>%
     addCircleMarkers(lng = data$LONGITUDE,
-               lat = data$LATITUDE, popup = paste(data$INSTNM, "<br>", data$INSTURL), clusterOptions = markerClusterOptions()) #%>%
+               lat = data$LATITUDE, popup = paste(data$INSTNM, "<br>", data$INSTURL), radius = 3, clusterOptions = markerClusterOptions()) #%>%
+    #addSearchOSM()
+    #addResetMapButton()
+    #addLegend(position = "bottomright", pal = pal, values = c("Public", "PNP", "PFP")) #color = ~pal(as.factor(data$CONTROL))
+    #setView( lng = -93.85, lat = 37.45, zoom = 4)
+  #label = ~data$INSTNM
 #    addLegend(values = ~data$CONTROL, colors = c("green", "blue", "red"))
 
   output$map_1 <- renderLeaflet(map_1)
