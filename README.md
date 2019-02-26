@@ -20,21 +20,21 @@ The **learning goals** for this project is:
 ## Project Title: University Hacker - Find Your University in 3 Easy Steps
 Term: Spring 2019
 
-+ Team # 4
-+ **Project title**: University Hacker - Find Your University in 3 Easy Steps
+Team # 4
+**Project title**: University Hacker - Find Your University in 3 Easy Steps
 	+ Elena Dubova
 	+ Ying Jin
 	+ Xuewei Li
 	+ Yun Zhang
 
-+ **Project summary**: University Hacker is an application for a wide range of potential college applicants - from high-school graduates to college students - who look for an easy and guided way to navigate university landscape of the United States. Most applications provide all sorts of information and functionality, but lack systematic approach and intuitive instructions. Sometimes, on the contrary, instructions to the application might be a whole page of text; it repulses many users, especially younger generation. The central idea of "University Hacker" design is to provide appealing methodology of university search along with seamless user experience. Structure of the application divides the journey to one's desired university into three big steps: 
+**Project summary**: University Hacker is an application for a wide range of potential college applicants - from high-school graduates to college students - who look for an easy and guided way to navigate university landscape of the United States. Most applications provide all sorts of information and functionality, but lack systematic approach and intuitive instructions. Sometimes, on the contrary, instructions to the application might be a whole page of text; it repulses many users, especially younger generation. The central idea of "University Hacker" design is to provide appealing methodology of university search along with seamless user experience. Structure of the application divides the journey to one's desired university into three big steps: 
        + Step 1: "Browse" *(helicopter view of the university landscape with no extra details)*
        + Step 2: "Compare" *(focus on differences between a few options identified in the first step)*
        + Step 3: "Dig In" *(detailed insights about one university of choice)*
        
 Thus, user navigates easily from **"Few Details - Many Universoties"** to **"Many Details - Few Universities"** based on his/her interests and aspirations. This process can be iterative, but is not tideous thanks to very simple navigation logic. 
 
-+ **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
+**Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
