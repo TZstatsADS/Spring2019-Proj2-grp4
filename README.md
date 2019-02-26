@@ -21,17 +21,16 @@ The **learning goals** for this project is:
 Term: Spring 2019
 
 Team # 4
-
-	* Elena Dubova
-	* Ying Jin
-	* Xuewei Li
-	* Yun Zhang
+- Elena Dubova
+- Ying Jin
+- Xuewei Li
+- Yun Zhang
 
 **Project summary**: **University Hacker** is an application for a wide range of potential college applicants - from high-school graduates to college students - who look for an easy and guided way to navigate university landscape of the United States. Most applications provide all sorts of information and functionality but lack systematic approach and intuitive instructions. Sometimes, on the contrary, instructions to the application might be a whole page of text; it repulses many users, especially younger generation. The central idea of "University Hacker" design is to provide appealing methodology of university search along with seamless user experience. Structure of the application divides the journey to one's desired university into three big steps:
 
-       * Step 1: "Browse" *(helicopter view of the university landscape with no extra details)*
-       * Step 2: "Compare" *(focus on differences between a few options identified in the first step)*
-       * Step 3: "Dig In" *(detailed insights about one university of choice)*
+- Step 1: "Browse" *(helicopter view of the university landscape with no extra details)*
+- Step 2: "Compare" *(focus on differences between a few options identified in the first step)*
+- Step 3: "Dig In" *(detailed insights about one university of choice)*
        
 Thus, user navigates easily from **"Few Details - Many Universities"** to **"Many Details - Few Universities"** based on his/her interests and aspirations. This process can be iterative but is not tedious thanks to very simple navigation logic. 
 
