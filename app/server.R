@@ -95,16 +95,13 @@ function(input, output) {
                  as.character(filter4()$INSTNM), as.character("</a></b>"))
     content = paste(sep = "<br/>",
                     url,
-                    paste("Admission Rate:", as.character(filter4()$ADM_RATE)),
-                    paste("Average ACT:", as.character(filter4()$ACTCMMID)),
-                    paste("Average SAT:", as.character(filter4()$SAT_AVG)),
-                    paste("Tuition (In-State):", as.character(filter4()$TUITIONFEE_IN)),
-                    paste("Tuition (Out-Of-State):", as.character(filter4()$TUITIONFEE_OUT)))
+                    paste("Tuition (In-State): $", as.character(filter4()$TUITIONFEE_IN)),
+                    paste("Tuition (Out-Of-State): $", as.character(filter4()$TUITIONFEE_OUT)))
 
     leaflet(data = filter4()) %>%
       addTiles() %>%
       addCircleMarkers(lng = filter4()$LONGITUDE,
-                       lat = filter4()$LATITUDE, popup = content, radius = 3, color = ~pal(as.factor(filter4()$CONTROL)), clusterOptions = markerClusterOptions()) %>%
+                       lat = filter4()$LATITUDE, popup = content, radius = 4, color = ~pal(as.factor(filter4()$CONTROL)), clusterOptions = markerClusterOptions()) %>%
       addLegend(position = "bottomright", pal = pal, values = c("Public", "PNP", "PFP"), title = "University Type",
                 labFormat = labelFormat(transform = function(values)  {
   values = replace(values, values=="PNP", "Private Non-Profit")
