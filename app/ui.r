@@ -59,15 +59,9 @@ control_var = c("All" = "All",
                 "Private nonprofit" = "PNP",
                 "Private for-profit" = "PFP")
 
-sidebar <- dashboardSidebar(
-  sidebarMenu(
-    menuItem("GET STARTED",tabName="welcome",icon=icon("lightbulb-o")),
-    menuItem("STEP 1: Browse",tabName="browse",icon=icon("arrow-alt-circle-right")),
-    menuItem("       Use Filter",tabName="filter",icon=icon("filter"),
-             selectInput("major", "Major",
-                         choices = majors),
-             selectInput("location","Location",
-                         choices = c("All","Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+regions = c("All", "U.S. Service Schools" = "Service", "New England" = "New_Eng", "Mid East" = "Mid_East","Great Lakes" = "Great_Lakes","Plains" = "Plains", "Southeast" = "Southeast", 
+                                       "Southwest" = "Southwest","Rocky Mountains" = "Rocky_Mountains", "Far West" = "Far_West", "Outlying Areas" = "Outlying")
+states = c("All","Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
                                      "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia",
                                      "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
                                      "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
@@ -76,8 +70,19 @@ sidebar <- dashboardSidebar(
                                      "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", 
                                      "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
                                      "West Virginia", "Wisconsin", "Wyoming", "American Samoa", "Federated States of Micronesia", 
-                                     "Guam", "Northern Mariana Islands", "Palau", "Puerto Rico", "Virgin Islands")),
-             selectInput("highest_degree", "Degree", choices = c("All","Graduate","Bachelor","Associate","Certificate","Non-degree-granting")),
+                                     "Guam", "Northern Mariana Islands", "Palau", "Puerto Rico", "Virgin Islands")
+sidebar <- dashboardSidebar(
+  sidebarMenu(
+    menuItem("GET STARTED",tabName="welcome",icon=icon("lightbulb-o")),
+    menuItem("STEP 1: Browse",tabName="browse",icon=icon("arrow-alt-circle-right")),
+    menuItem("       Use Filter",tabName="filter",icon=icon("filter"),
+             selectInput("major", "Major", choices = majors),
+             br(),
+             selectInput("location","State", choices = states),
+             h4(textOutput("or")),
+             selectInput("region", "Region", choices = regions),
+             br(),
+             selectInput("highest_degree", "Highest Degree", choices = c("All","Graduate","Bachelor","Associate","Certificate","Non-degree-granting")),
              selectInput("control", "Type", choices = control_var),
              checkboxInput("open_adm", "Open Admissions Policy")),
     menuItem("STEP 2: Compare",tabName="compare",icon=icon("arrow-alt-circle-right")),
@@ -105,15 +110,7 @@ body <- dashboardBody(
               valueBoxOutput(width = 2, "avgBox_sat"),
               valueBoxOutput(width = 2, "avgBox_adm"),
               tabBox(width = 12, 
-                     tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1")),
-                     tabPanel(title="Map_2", width = 12, solidHeader = T, 
-                              leafletOutput("map_2"),
-                              absolutePanel(id = "controls", class = "panel panel-default", fixed = T, draggable = T, top = "auto", left = "auto", 
-                                            right = 60, bottom = 20, width = "300", hight = "auto",
-                                            h5("Major Hacker"), 
-                                            
-                                            sliderInput("lirank", "Rank", min = 1, max = 300, value = 300),
-                                            selectInput("color", "Major", livars)))),
+                     tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1"))),
               tabBox(width = 12,
                      tabPanel('Detail',
                               dataTableOutput("uni_table"),

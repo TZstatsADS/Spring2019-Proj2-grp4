@@ -4,29 +4,6 @@ data = read.csv("../output/processed_data_map_1.csv")
 data_v = read.csv("../output/processed_data_value_box.csv")
 
 function(input, output) {
-  #pal = colorFactor(palette = c("red", "blue", "green"), 
-  #                  levels = c("Public", "PNP", "PFP"))  
-  map_1 <- leaflet() %>%
-    addTiles(
-      urlTemplate = "//{s}.tiles.mapbox.com/v3/jcheng.map-5ebohr46/{z}/{x}/{y}.png",
-      attribution = 'Maps by <a href="http://www.mapbox.com/"Mapbox</a>') %>%
-    addCircleMarkers(lng = data$LONGITUDE,
-                     lat = data$LATITUDE, popup = paste(data$INSTNM, "<br>", data$INSTURL), radius = 3, clusterOptions = markerClusterOptions()) 
-    #setView( lng = -93.85, lat = 37.45, zoom = 4) %>%
-    #fitBounds(lng1 = -124.7844079, lng2 = -669513812,
-    #          lat1 = 49.3457868, lat2 = 24.7433195) %>%
-    #setMaxBounds(lng1 = -124.7844079, lng2 = -669513812,
-    #          lat1 = 49.3457868, lat2 = 24.7433195) %>%
-    
-    #clearShapes() %>%
-    #addSearchOSM()
-    #addResetMapButton()
-    #addLegend(position = "bottomright", pal = pal, values = c("Public", "PNP", "PFP")) #color = ~pal(as.factor(data$CONTROL))
-    #setView( lng = -93.85, lat = 37.45, zoom = 4)
-  #label = ~data$INSTNM
-#    addLegend(values = ~data$CONTROL, colors = c("green", "blue", "red"))
-
-  output$map_1 <- renderLeaflet(map_1)
   
 #Filters
   major <- reactive({
@@ -35,6 +12,10 @@ function(input, output) {
   
   location <- reactive({
     location <- input$location
+  })
+  
+  region <- reactive({
+    region <- input$region
   })
   
   highest_degree <- reactive({
@@ -60,8 +41,12 @@ function(input, output) {
    if(location() == "All") {filter1 = filter0() } else { filter1 = filter(filter0(), location() == Location)}
   })
   
+  filter1_2 = reactive({ 
+   if(region() == "All") {filter1_2 = filter1() } else { filter1_2 = filter(filter1(), region() == REGION)}
+  })
+  
   filter2 = reactive({ 
-    if(highest_degree() == "All") {filter2 = filter1() } else { filter2 = filter(filter1(), highest_degree() == HIGHDEG)}
+    if(highest_degree() == "All") {filter2 = filter1_2() } else { filter2 = filter(filter1_2(), highest_degree() == HIGHDEG)}
   })
   
   filter3 = reactive({ 
@@ -74,53 +59,60 @@ function(input, output) {
     } else { filter4 = filter3()}
   })
   
+  output$or = renderText({ "___________ or___________"})
+  ##Map 1
+  
+  #pal = colorFactor(palette = c("red", "blue", "green"), 
+   #                 levels = c("Public", "PNP", "PFP"))  
+  #map_0 <- leaflet() %>%
+  # addTiles() %>%
+  #  setView( lng = -93.85, lat = 37.45, zoom = 4) %>%
+  # addCircleMarkers(lng = data$LONGITUDE,
+  #                  lat = data$LATITUDE, popup = paste(data$INSTNM, "<br>", data$INSTURL), radius = 3, clusterOptions = markerClusterOptions()) 
+  # setView( lng = -93.85, lat = 37.45, zoom = 4) %>%
+  #  addResetMapButton()
+  #fitBounds(lng1 = -124.7844079, lng2 = -669513812,
+  #          lat1 = 49.3457868, lat2 = 24.7433195) %>%
+  #setMaxBounds(lng1 = -124.7844079, lng2 = -669513812,
+  #          lat1 = 49.3457868, lat2 = 24.7433195) %>%
+  
+  #clearShapes() %>%
+  #addSearchOSM()
+  #addResetMapButton()
+  #addLegend(position = "bottomright", pal = pal, values = c("Public", "PNP", "PFP")) #color = ~pal(as.factor(data$CONTROL))
+  #setView( lng = -93.85, lat = 37.45, zoom = 4)
+  #label = ~data$INSTNM
+  #    addLegend(values = ~data$CONTROL, colors = c("green", "blue", "red"))
+  
+  #output$map_0 <- renderLeaflet({map_0})
+  
   output$map_1 = renderLeaflet({
+    
+    pal = colorFactor(palette = c("magenta", "darkblue", "black"), 
+                      levels = c("Public", "PNP", "PFP"))
+    
     url = paste0(as.character("<b><a href = 'http://"), as.character(filter4()$INSTURL),"'>", 
                  as.character(filter4()$INSTNM), as.character("</a></b>"))
     content = paste(sep = "<br/>",
                     url,
-                    paste("Rank:", as.character(filter4()$Ranking)))
-                 
-    mapStates = map("state", fill = TRUE, plot = FALSE)
-    
-    leaflet(data = mapStates) %>%
+                    paste("Admission Rate:", as.character(filter4()$ADM_RATE)),
+                    paste("Average ACT:", as.character(filter4()$ACTCMMID)),
+                    paste("Average SAT:", as.character(filter4()$SAT_AVG)),
+                    paste("Tuition (In-State):", as.character(filter4()$TUITIONFEE_IN)),
+                    paste("Tuition (Out-Of-State):", as.character(filter4()$TUITIONFEE_OUT)))
+
+    leaflet(data = filter4()) %>%
       addTiles() %>%
       addCircleMarkers(lng = filter4()$LONGITUDE,
-                       lat = filter4()$LATITUDE, popup = content, clusterOptions = markerClusterOptions())
+                       lat = filter4()$LATITUDE, popup = content, radius = 3, color = ~pal(as.factor(filter4()$CONTROL)), clusterOptions = markerClusterOptions()) %>%
+      addLegend(position = "bottomright", pal = pal, values = c("Public", "PNP", "PFP"), title = "University Type",
+                labFormat = labelFormat(transform = function(values)  {
+  values = replace(values, values=="PNP", "Private Non-Profit")
+  values = replace(values, values=="PFP", "Private For Profit")
+  return(values)
+  })) 
+    
   })
- 
-##Second map
-
- observe({
-   
-   usedcolor <- "green"
-   
-   data_2$Ranking = as.numeric(data_2$Ranking)
-   lirank = as.numeric(input$lirank)
-   lidata = filter(data_2, Ranking < lirank)
-   radius = lidata$History*1000000
-   opacity = 0.8
-   
-   if(input$color == "Other") {
-     usedcolor = "yellow"
-     radius = lidata$Other*100000
-     opacity = 0.8
-   } else if(input$color == "Psychology") {
-     usedcolor = "red"
-     radius = lidata$Psychology*1000000
-     opacity = 0.8
-     }
- 
- map_2 <- leaflet(data = lidata) %>%
-   addTiles(
-     urlTemplate = "//{s}.tiles.mapbox.com/v3/jcheng.map-5ebohr46/{z}/{x}/{y}.png",
-     attribution = 'Maps by <a href="http://www.mapbox.com/"Mapbox</a>') %>% 
-   setView( lng = -93.85, lat = 37.45, zoom = 4) %>%
-   clearShapes() %>%
-   addCircles(~LONGITUDE, ~LATITUDE, radius = radius, layerId = ~UNITID, stroke = F, fillOpacity = opacity, fillColor = usedcolor)
- 
- output$map_2 <- renderLeaflet(map_2)
-})  
  
 #### Value Boxes
  
@@ -188,9 +180,9 @@ function(input, output) {
  ##Table
  
  output$uni_table = DT::renderDataTable({
-   table = subset(filter4(), select = c("Ranking", "INSTNM", "ADM_RATE", "CONTROL", "INSTURL", "ACTCMMID", "SAT_AVG", "OPENADMP", "TUITIONFEE_IN", "TUITIONFEE_OUT"))
+   table = subset(filter4(), select = c("Ranking", "INSTNM", "ADM_RATE", "ACTCMMID", "SAT_AVG", "TUITIONFEE_IN", "TUITIONFEE_OUT"))
    
-   colnames(table) = c("Rank", "Name", "Admission Rate", "Type", "URL", "Average ACT","Average SAT", "Open Admission Policy", "Tuition (In-State)", "Tuition (Out-of-State)")
+   colnames(table) = c("Rank", "Name", "Admission Rate", "Average ACT", "Average SAT", "Tuition (In-State)", "Tuition (Out-of-State)")
    
    datatable(table, rownames = F, selection = "single", options = list(order = list(list(0, "asc"), list(1, "asc")))) %>%
      formatPercentage(c("Admission Rate"), digits = 0) %>%
