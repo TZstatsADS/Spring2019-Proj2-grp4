@@ -114,7 +114,7 @@ body <- dashboardBody(
                               dataTableOutput("uni_table"),
                               tags$style((type = "text/css")))))),
     
-    tabItem(tabName="compare", "Placeholder - Step 2: Compare Universities of Choice",
+    tabItem(tabName="compare",
             fluidRow(
               tabBox(width = 12,
                      tabPanel(title = h3("Select the universities that interest you :)"), solidHeader = T,
@@ -143,7 +143,7 @@ body <- dashboardBody(
             
             
             ),
-    tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University",
+    tabItem(tabName="dig_in",
             fluidRow(
               tabBox(width = 12,
                      tabPanel(title = h3("Choose one university to find more :)"), solidHeader = T,
