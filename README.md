@@ -38,7 +38,10 @@ Thus, user navigates easily from **"Few Details - Many Universities"** to **"Man
 
 ### Contribution statement 
 
-Team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
+- Elena Dubova: Set up the structure of the whole app, and do the Step 1.
+- Ying Jin: Improve UI part for Step 2 and Step 3, help with Step 2.
+- Xuewei Li: Merge the ranking and basic data of 10 years, do the Step 3.
+- Yun Zhang: Process data and build the basic structure for part "Compare" , do the Step 2.  
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 
