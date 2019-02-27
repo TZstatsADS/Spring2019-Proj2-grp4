@@ -1,15 +1,15 @@
-setwd('~/Documents/GitHub/Spring2019-Proj2-grp4/app')
-data_2 = read.csv("../output/processed_data_map_2.csv")
-data = read.csv("../output/processed_data_map_1.csv")
-data_v = read.csv("../output/processed_data_value_box.csv")
-data_c = read.csv("../output/data_compare_3.csv",header = TRUE)
+
+data_2 = read.csv("processed_data_map_2.csv")
+data = read.csv("processed_data_map_1.csv")
+data_v = read.csv("processed_data_value_box.csv")
+data_c = read.csv("data_compare_3.csv",header = TRUE)
 data_c$Unemployment.Rate <- data_c$Unemployment.Rate/100
-basic = read.csv('../output/basic.csv', stringsAsFactors=FALSE)
-academics = read.csv('../output/academics.csv', stringsAsFactors=FALSE)
-act = read.csv('../output/act.csv', stringsAsFactors=FALSE)
-sat = read.csv('../output/sat.csv', stringsAsFactors=FALSE) 
-cost = read.csv('../output/cost.csv', stringsAsFactors=FALSE)
-adm_rate = read.csv('../output/adm_rate.csv', stringsAsFactors=FALSE)
+basic = read.csv('basic.csv', stringsAsFactors=FALSE)
+academics = read.csv('academics.csv', stringsAsFactors=FALSE)
+act = read.csv('act.csv', stringsAsFactors=FALSE)
+sat = read.csv('sat.csv', stringsAsFactors=FALSE) 
+cost = read.csv('cost.csv', stringsAsFactors=FALSE)
+adm_rate = read.csv('adm_rate.csv', stringsAsFactors=FALSE)
 
 function(input, output) {
   
@@ -96,7 +96,7 @@ function(input, output) {
   
   output$map_1 = renderLeaflet({
     
-    pal = colorFactor(palette = c("magenta", "darkblue", "black"), 
+    pal = colorFactor(palette = c("black", "#dd1c77", "#3182bd"), 
                       levels = c("Public", "PNP", "PFP"))
     
     url = paste0(as.character("<b><a href = 'http://"), as.character(filter4()$INSTURL),"'>", 
@@ -329,7 +329,7 @@ function(input, output) {
      else
        ggplot(data = adm_rate) + 
        geom_point(aes(x = year, y = rate)) + 
-       geom_smooth(aes(x = year, y = rate), method = lm) + 
+       geom_smooth(aes(x = year, y = rate), method = lm, color = "blue", fill = "lightblue") + 
        scale_x_continuous(breaks=adm_rate$year) + ylab("Admission Rate")+theme_wsj()}
    else
      ggplot() + ggtitle("Select a university")
@@ -350,7 +350,7 @@ function(input, output) {
      else
        ggplot(data = cul) +
        geom_point(aes(x = year, y = cul50)) + 
-       geom_smooth(aes(x = year, y = cul50), method = lm, color = "black") + 
+       geom_smooth(aes(x = year, y = cul50), method = lm, color = "blue", fill = "lightblue") + 
        geom_line(aes(x = year, y = cul25), color = "red") +
        geom_line(aes(x = year, y = cul75), color = "red") +
        scale_x_continuous(breaks=cul$year) + ylab("cumulative score")+theme_wsj()}
@@ -370,7 +370,7 @@ function(input, output) {
      else
        ggplot(data = en) +
        geom_point(aes(x = year, y = en50)) + 
-       geom_smooth(aes(x = year, y = en50), method = lm, color = "black") + 
+       geom_smooth(aes(x = year, y = en50), method = lm, color = "blue", fill = "lightblue") + 
        geom_line(aes(x = year, y = en25), color = "red") +
        geom_line(aes(x = year, y = en75), color = "red") +
        scale_x_continuous(breaks=en$year) + ylab("English score")+theme_wsj()}
@@ -390,7 +390,7 @@ function(input, output) {
      else
        ggplot(data = math) + 
        geom_point(aes(x = year, y = math50)) + 
-       geom_smooth(aes(x = year, y = math50), method = lm, color = "black") + 
+       geom_smooth(aes(x = year, y = math50), method = lm, color = "blue", fill = "lightblue") + 
        geom_line(aes(x = year, y = math25), color = "red") +
        geom_line(aes(x = year, y = math75), color = "red") +
        scale_x_continuous(breaks=math$year) + ylab("Math score")+theme_wsj()}
@@ -411,7 +411,7 @@ function(input, output) {
      else
        ggplot(data = cr) + 
        geom_point(aes(x = year, y = cr50)) + 
-       geom_smooth(aes(x = year, y = cr50), method = lm, color = "black") + 
+       geom_smooth(aes(x = year, y = cr50), method = lm, color = "blue", fill = "lightblue") + 
        geom_line(aes(x = year, y = cr25), color = "red") +
        geom_line(aes(x = year, y = cr75), color = "red") +
        scale_x_continuous(breaks=cr$year) + ylab("Critical Reading")+theme_wsj()}
@@ -430,10 +430,10 @@ function(input, output) {
      else
        ggplot(data = math) + 
        geom_point(aes(x = year, y = math50)) + 
-       geom_smooth(aes(x = year, y = math50), method = lm, color = "black") + 
+       geom_smooth(aes(x = year, y = math50), method = lm, color = "blue", fill = "lightblue") + 
        geom_line(aes(x = year, y = math25), color = "red") +
        geom_line(aes(x = year, y = math75), color = "red") +
-       scale_x_continuous(breaks=math$year) + ylab("Math")}
+       scale_x_continuous(breaks=math$year) + ylab("Math")+theme_wsj()}
    else
      ggplot() + ggtitle("Select a university")
  })
@@ -447,7 +447,7 @@ function(input, output) {
      else
        ggplot(data = eq) + 
        geom_point(aes(x = year, y = eq_mean)) + 
-       geom_smooth(aes(x = year, y = eq_mean), method = lm, color = "black") +
+       geom_smooth(aes(x = year, y = eq_mean), method = lm, color = "blue", fill = "lightblue") +
        scale_x_continuous(breaks=eq$year) + ylab("Equivalent")+theme_wsj()}
    else
      ggplot() + ggtitle("Select a university")
@@ -464,7 +464,7 @@ function(input, output) {
      else
        ggplot(data = cost) +
        geom_point(aes(x = year, y = tuition)) + 
-       geom_smooth(aes(x = year, y = tuition), method = lm) +
+       geom_smooth(aes(x = year, y = tuition), method = lm, col = "blue", fill = "lightblue") +
        scale_x_continuous(breaks=cost$year) + ylab("In-state Cost")+theme_wsj()}
    else
      ggplot() + ggtitle("Select a university")
@@ -480,7 +480,7 @@ function(input, output) {
      else
        ggplot(data = cost) +
        geom_point(aes(x = year, y = tuition)) + 
-       geom_smooth(aes(x = year, y = tuition), method = lm) +
+       geom_smooth(aes(x = year, y = tuition), method = lm, col = "blue", fill = "lightblue") +
        scale_x_continuous(breaks=cost$year) + ylab("In-state Cost")+theme_wsj()}
    else
      ggplot() + ggtitle("Select a university")

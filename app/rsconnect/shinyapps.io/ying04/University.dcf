@@ -1,0 +1,13 @@
+name: University
+title: University
+username:
+account: ying04
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 741743
+bundleId: 1902195
+url: https://ying04.shinyapps.io/University/
+when: 1551225726.10382
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: draft.R|professor examlpe/server.R|professor examlpe/ui.r|www/.DS_Store
