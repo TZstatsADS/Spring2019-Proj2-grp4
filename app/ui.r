@@ -6,10 +6,6 @@ header <- dashboardHeader(title="University Hacker",
                             type = "messages",
                             messageItem(
                               from = "University Hacker Team",
-                              message = "Find YOUR university here!"
-                            ),
-                            messageItem(
-                              from = "University Hacker Team",
                               message = "We use College Scorecard Data",
                               href = "https://collegescorecard.ed.gov/data/documentation/"
                             )
@@ -57,14 +53,15 @@ majors = c("All" = "All",
            "Business Management and Marketing" = "Business",
            "History" = "History", 
            "Other" = "Other")
-sidebar <- dashboardSidebar(
-  sidebarMenu(
-    menuItem("GET STARTED",tabName="welcome",icon=icon("lightbulb-o")),
-    menuItem("STEP 0: FILTER",tabName="filter",icon=icon("arrow-alt-circle-right"),
-             selectInput("major", "Major",
-                         choices = majors),
-             selectInput("location","Location",
-                         choices = c("All","Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+
+control_var = c("All" = "All", 
+                "Public" = "Public",
+                "Private nonprofit" = "PNP",
+                "Private for-profit" = "PFP")
+
+regions = c("All", "U.S. Service Schools" = "Service", "New England" = "New_Eng", "Mid East" = "Mid_East","Great Lakes" = "Great_Lakes","Plains" = "Plains", "Southeast" = "Southeast", 
+                                       "Southwest" = "Southwest","Rocky Mountains" = "Rocky_Mountains", "Far West" = "Far_West", "Outlying Areas" = "Outlying")
+states = c("All","Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
                                      "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia",
                                      "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
                                      "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
@@ -73,11 +70,21 @@ sidebar <- dashboardSidebar(
                                      "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", 
                                      "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", 
                                      "West Virginia", "Wisconsin", "Wyoming", "American Samoa", "Federated States of Micronesia", 
-                                     "Guam", "Northern Mariana Islands", "Palau", "Puerto Rico", "Virgin Islands")),
-             selectInput("highest_degree", "Degree", choices = c("All","Graduate","Bachelor","Associate","Certificate","Non-degree-granting")),
-             selectInput("control", "Type", choices = c("All", "Public","Private nonprofit","Private for-profit")),
-             checkboxInput("open_adm", "Open Admissions Policy")),
+                                     "Guam", "Northern Mariana Islands", "Palau", "Puerto Rico", "Virgin Islands")
+sidebar <- dashboardSidebar(
+  sidebarMenu(
+    menuItem("GET STARTED",tabName="welcome",icon=icon("lightbulb-o")),
     menuItem("STEP 1: Browse",tabName="browse",icon=icon("arrow-alt-circle-right")),
+    menuItem("       Use Filter",tabName="filter",icon=icon("filter"),
+             selectInput("major", "Major", choices = majors),
+             br(),
+             selectInput("location","State", choices = states),
+             h4(textOutput("or")),
+             selectInput("region", "Region", choices = regions),
+             br(),
+             selectInput("highest_degree", "Highest Degree", choices = c("All","Graduate","Bachelor","Associate","Certificate","Non-degree-granting")),
+             selectInput("control", "Type", choices = control_var),
+             checkboxInput("open_adm", "Open Admissions Policy")),
     menuItem("STEP 2: Compare",tabName="compare",icon=icon("arrow-alt-circle-right")),
     menuItem("STEP 3: Dig In",tabName="dig_in",icon=icon("arrow-alt-circle-right"))
   )
@@ -87,36 +94,61 @@ livars = c("History" = "History", "Other" = "Other", "Psychology" = "Psychology"
 #Body
 
 body <- dashboardBody(
+  fluidPage(
   tabItems(
     tabItem(tabName = "welcome",
-            fluidRow(img(src = 'for-shiny-app-2.png'))),
+            fluidRow(img(src = 'for-shiny-app-3.png'),
+                     img(src = 'shiny_ad.png'))),
+    tabItem(tabName = "filter"
+      
+    ),
     tabItem(tabName = "browse",
-            
             fluidRow(
-              tabBox(width = 6, 
-                     tabPanel(title = "Top Rank", width = 6, solidHeader = T, tableOutput("rank"))),
-              tabBox(width = 6, 
-                     tabPanel(title = "Most Affordable", width = 6, solidHeader = T, tableOutput("afford"))),
+              valueBoxOutput(width = 3, "avgBox_in"),
+              valueBoxOutput(width = 3, "avgBox_out"),
+              valueBoxOutput(width = 2, "avgBox_act"),
+              valueBoxOutput(width = 2, "avgBox_sat"),
+              valueBoxOutput(width = 2, "avgBox_adm"),
               tabBox(width = 12, 
-                     tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1")),
-                     tabPanel(title="Map_2", width = 12, solidHeader = T, 
-                              leafletOutput("map_2"),
-                              absolutePanel(id = "controls", class = "panel panel-default", fixed = T, draggable = T, top = "auto", left = "auto", 
-                                            right = 60, bottom = 20, width = "300", hight = "auto",
-                                            h5("Major Hacker"), 
-                                            
-                                            sliderInput("lirank", "Rank", min = 1, max = 300, value = 300),
-                                            selectInput("color", "Major", livars)))),
+                     tabPanel(title="Map", width = 12, solidHeader = T, leafletOutput("map_1"))),
               tabBox(width = 12,
                      tabPanel('Detail',
                               dataTableOutput("uni_table"),
                               tags$style((type = "text/css")))))),
     
-    tabItem(tabName="compare", "Placeholder - Step 2: Compare Universities of Choice"),
+    tabItem(tabName="compare", "Placeholder - Step 2: Compare Universities of Choice",
+            fluidRow(
+              tabBox(width = 12,
+                     tabPanel(title = h3("Select the universities that interest you :)"), solidHeader = T,
+                              fluidRow(
+                                column(12,selectInput('university', '', data_c$College, multiple=TRUE))))),
+              box(width = 12,collapsible = T,
+                  title = strong("Basic Information"), solidHeader = F,
+                  fluidRow(
+                    column(12, DT::dataTableOutput("universities.table")))),
+              
+              box(width = 12,title = strong("Visualization"), solidHeader = F, collapsible = T,collapsed = TRUE,
+                  fluidRow(
+                    column(12, h4("1.Parcoords Comparison")),
+                    column(12, parcoordsOutput('par',width = '1200px',height='500px'))),
+                  hr(),
+                  fluidRow( 
+                    column(12, h4("2.Tuition & Earnings Comparison (Unit: dollar)")),
+                    hr(),
+                    plotOutput("tuitionPlot")),
+                  fluidRow( 
+                    column(12, h4("3.Rates Comparison")),
+                    hr(),
+                    plotOutput("proportionPlot"),
+                    p(em("Note: Value of 0 represents information unavailable")))
+              ))
+            
+            
+            ),
     tabItem(tabName="dig_in", "Placeholder - Step 3: Dig into Details on THE University")
   )
 )
-
+)
 
 #Get the dashboard
 

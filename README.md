@@ -2,7 +2,7 @@
 
 ### [Project Description](doc/project2_desc.md)
 
-![screenshot](doc/screenshot2.png)
+![screenshot](app/www/for-shiny-app-3.png)
 
 In this second project of GR5243 Applied Data Science, we develop a version 2.0 of an *Exploratory Data Analysis and Visualization* shiny app on a topic of your choice using [NYC Open Data](https://opendata.cityofnewyork.us/) or U.S. government open data released on the [data.gov](https://data.gov/) website. See [Project 2 Description](doc/project2_desc.md) for more details.  
 
@@ -16,20 +16,29 @@ The **learning goals** for this project is:
 - shiny app/shiny server
 
 *The above general statement about project 2 can be removed once you are finished with your project. It is optional.
-
-## Project Title Lorem ipsum dolor sit amet
+All
+## Project Title: University Hacker - Find Your University in 3 Easy Steps
 Term: Spring 2019
 
-+ Team # 4
-+ **Projec title**: + Team members
-	+ Elena Dubova
-	+ Ying Jin
-	+ Xuewei Li
-	+ Yun Zhang
+### Team # 4
+- Elena Dubova
+- Ying Jin
+- Xuewei Li
+- Yun Zhang
 
-+ **Project summary**: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+### Project summary 
 
-+ **Contribution statement**: ([default](doc/a_note_on_contributions.md)) All team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
+**University Hacker** is an application for a wide range of potential college applicants - from high-school graduates to college students - who look for an easy and guided way to navigate university landscape of the United States. Most applications provide all sorts of information and functionality but lack systematic approach and intuitive instructions. Sometimes, on the contrary, instructions to the application might be a whole page of text; it repulses many users, especially younger generation. The central idea of "University Hacker" design is to provide appealing methodology of university search along with seamless user experience. Structure of the application divides the journey to one's desired university into three big steps:
+
+- Step 1: "Browse" *(helicopter view of the university landscape with no extra details)*
+- Step 2: "Compare" *(focus on differences between a few options identified in the first step)*
+- Step 3: "Dig In" *(detailed insights about one university of choice)*
+       
+Thus, user navigates easily from **"Few Details - Many Universities"** to **"Many Details - Few Universities"** based on his/her interests and aspirations. This process can be iterative but is not tedious thanks to very simple navigation logic. 
+
+### Contribution statement 
+
+Team members contributed equally in all stages of this project. All team members approve our work presented in this GitHub repository including this contributions statement. 
 
 Following [suggestions](http://nicercode.github.io/blog/2013-04-05-projects/) by [RICH FITZJOHN](http://nicercode.github.io/about/#Team) (@richfitz). This folder is orgarnized as follows.
 

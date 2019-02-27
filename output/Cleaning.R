@@ -31,28 +31,34 @@ data %>%
 #iter 4
 
 data = read.csv("../output/ranking_data.csv")
+library(dplyr)
 library(readxl)
 locations = read_excel("../output/locations.xlsx", col_names = F)
 colnames(locations) <- c("ST_FIPS", "Location")
 
 dat = data %>%
   filter(CURROPER == 1) %>%
-  select(UNITID, INSTNM, INSTURL, Ranking, ST_FIPS, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
+  select(UNITID, INSTNM, INSTURL, ACTCMMID, SAT_AVG, ADM_RATE, Ranking, REGION, ST_FIPS, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
          PCIP15, PCIP16, PCIP19, PCIP22, PCIP23, PCIP24, PCIP25, PCIP26, PCIP27, PCIP29, PCIP30,PCIP31, PCIP38, PCIP39, PCIP40, PCIP41, PCIP42, PCIP43, PCIP44,
-         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, OPENADMP) %>%
+         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, TUITIONFEE_IN, TUITIONFEE_OUT, OPENADMP) %>%
   left_join(locations, by = "ST_FIPS") %>% 
-  select(UNITID, INSTNM, INSTURL, Ranking,  Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
+  select(UNITID, INSTNM, INSTURL, ACTCMMID, SAT_AVG, ADM_RATE, Ranking,  REGION, Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
          PCIP15, PCIP16, PCIP19, PCIP22, PCIP23, PCIP24, PCIP25, PCIP26, PCIP27, PCIP29, PCIP30,PCIP31, PCIP38, PCIP39, PCIP40, PCIP41, PCIP42, PCIP43, PCIP44,
-         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, OPENADMP) %>%
+         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, TUITIONFEE_IN, TUITIONFEE_OUT, OPENADMP) %>%
   mutate(HIGHDEG = factor(HIGHDEG,
                           levels = c(0, 1, 2, 3, 4),
                           labels =  c('Non-Degree', 'Certificate', 'Associate', 'Bachelor', "Graduate"))) %>%
   mutate(CONTROL = factor(CONTROL,
                           levels = c(1, 2, 3),
-                          labels =  c('Public', 'Private Non-Profit', 'Private for-Profit'))) %>%
+                          labels =  c('Public', 'PNP', 'PFP'))) %>%
   mutate(OPENADMP = factor(OPENADMP,
                            levels = c(1, 2, "NULL"),
-                           labels =  c('Yes', 'No', 'Unknown')))
+                           labels =  c('Yes', 'No', 'Unknown'))) %>%
+  mutate(REGION = factor(REGION,
+                           levels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
+                           labels =  c("Service", "New_Eng", "Mid_East", "Great_Lakes", "Plains", "Southeast", 
+                                       "Southwest", "Rocky_Mountains", "Far_West", "Outlying"))) 
+
 
 to_binary = function(data) {
   ifelse(as.numeric(as.character(data))>0, 1, 0)
@@ -77,7 +83,7 @@ colnames(dat_major) <- c("Agriculture","Natural","Architecture",
 dat_major = as.data.frame(dat_major)
 
 dat = dat %>%
-  select(UNITID, INSTNM, INSTURL, Ranking, Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, OPENADMP) %>%
+  select(UNITID, INSTNM, INSTURL, ACTCMMID, SAT_AVG, ADM_RATE, Ranking, REGION, Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, TUITIONFEE_IN, TUITIONFEE_OUT, OPENADMP) %>%
   cbind(dat_major)
 
 write.csv(dat, file = "../output/processed_data_map_1.csv")
@@ -87,27 +93,32 @@ saveRDS(dat, file = "../output/processed_data_map_1.rds")
 
 data = read.csv("../output/ranking_data.csv")
 library(readxl)
+library(dplyr)
 locations = read_excel("../output/locations.xlsx", col_names = F)
 colnames(locations) <- c("ST_FIPS", "Location")
 
 dat = data %>%
   filter(CURROPER == 1) %>%
-  select(UNITID, INSTNM, INSTURL, Ranking, ST_FIPS, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
+  select(UNITID, INSTNM, INSTURL, ACTCMMID, SAT_AVG, ADM_RATE, Ranking, REGION, ST_FIPS, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
          PCIP15, PCIP16, PCIP19, PCIP22, PCIP23, PCIP24, PCIP25, PCIP26, PCIP27, PCIP29, PCIP30,PCIP31, PCIP38, PCIP39, PCIP40, PCIP41, PCIP42, PCIP43, PCIP44,
-         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, OPENADMP) %>%
+         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, TUITIONFEE_IN, TUITIONFEE_OUT, OPENADMP) %>%
   left_join(locations, by = "ST_FIPS") %>% 
-  select(UNITID, INSTNM, INSTURL, Ranking, Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
+  select(UNITID, INSTNM, INSTURL, ACTCMMID, SAT_AVG, ADM_RATE, Ranking, REGION, Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, PCIP01, PCIP03, PCIP04, PCIP05, PCIP09, PCIP10, PCIP11, PCIP12, PCIP13, PCIP14,
          PCIP15, PCIP16, PCIP19, PCIP22, PCIP23, PCIP24, PCIP25, PCIP26, PCIP27, PCIP29, PCIP30,PCIP31, PCIP38, PCIP39, PCIP40, PCIP41, PCIP42, PCIP43, PCIP44,
-         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, OPENADMP) %>%
+         PCIP45, PCIP46, PCIP47, PCIP48, PCIP49, PCIP50, PCIP51, PCIP52, PCIP54, TUITIONFEE_IN, TUITIONFEE_OUT, OPENADMP) %>%
   mutate(HIGHDEG = factor(HIGHDEG,
                           levels = c(0, 1, 2, 3, 4),
                           labels =  c('Non-Degree', 'Certificate', 'Associate', 'Bachelor', "Graduate"))) %>%
   mutate(CONTROL = factor(CONTROL,
                           levels = c(1, 2, 3),
-                          labels =  c('Public', 'Private Non-Profit', 'Private for-Profit'))) %>%
+                          labels =  c('Public', 'PNP', 'PFP'))) %>%
   mutate(OPENADMP = factor(OPENADMP,
                            levels = c(1, 2, "NULL"),
-                           labels =  c('Yes', 'No', 'Unknown')))
+                           labels =  c('Yes', 'No', 'Unknown'))) %>%
+  mutate(REGION = factor(REGION,
+                           levels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
+                           labels =  c("Service", "New_Eng", "Mid_East", "Great_Lakes", "Plains", "Southeast", 
+                                       "Southwest", "Rocky_Mountains", "Far_West", "Outlying"))) 
 
 to_float = function(data) {
   as.numeric(as.character(data))
@@ -133,7 +144,7 @@ colnames(dat_major) <- c("Agriculture","Natural","Architecture",
 dat_major = as.data.frame(dat_major)
 
 dat = dat %>%
-  select(UNITID, INSTNM, INSTURL, Ranking, Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, OPENADMP) %>%
+  select(UNITID, INSTNM, INSTURL, ACTCMMID, SAT_AVG, ADM_RATE, Ranking, REGION, Location, HIGHDEG, CONTROL, ZIP, LATITUDE, LONGITUDE, TUITIONFEE_IN, TUITIONFEE_OUT, OPENADMP) %>%
   cbind(dat_major)
 
 write.csv(dat, file = "../output/processed_data_map_2.csv")
