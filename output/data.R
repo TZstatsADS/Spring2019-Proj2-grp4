@@ -1,7 +1,0 @@
-setwd("C:/Users/sharonsnow/Documents/GitHub/Spring2019-Proj2-grp4/")
-basic = read.csv('output/basic.csv', stringsAsFactors=FALSE)
-academics = read.csv('output/academics.csv', stringsAsFactors=FALSE)
-act = read.csv('output/act.csv', stringsAsFactors=FALSE)
-sat = read.csv('output/sat.csv', stringsAsFactors=FALSE) 
-cost = read.csv('output/cost.csv', stringsAsFactors=FALSE)
-adm_rate = read.csv('output/adm_rate.csv', stringsAsFactors=FALSE)
