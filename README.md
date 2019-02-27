@@ -20,7 +20,7 @@ All
 ## Project Title: University Hacker - Find Your University in 3 Easy Steps
 Term: Spring 2019
 
-[University Hacker](https://ying04.shinyapps.io/University/)
+APP Link: [University Hacker](https://ying04.shinyapps.io/University/)
 
 ### Team # 4
 - Elena Dubova
